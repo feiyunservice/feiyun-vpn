@@ -1,0 +1,546 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>飞云</title>
+<style>
+  :root{
+    --bg:#FFFFFF;
+    --bg-raised:#FFFFFF;
+    --bg-raised-2:#EFF6FF;
+    --line:#DBEAFE;
+    --text:#151812;
+    --text-dim:#5C6058;
+    --text-faint:#9A9D95;
+    --amber:#0098F0;
+    --amber-dim:#0077CC;
+    --amber-glow:#0098F0;
+    --green:#0098F0;
+    --green-ink:#0098F0;
+    --mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    --sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+    --serif: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+    --dotop:0.035;
+    --term-btn:#D9D7CD;
+    --shadow:0 30px 60px -30px rgba(15,24,18,0.12);
+    --nav-bg:rgba(255,255,255,0.88);
+    --hero-bg:#E1F5EE;
+    --hero-line:#E4E3DC;
+    --hero-border:#DBEAFE;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--bg);
+    color:var(--text);
+    font-family:var(--sans);
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+    transition:background .2s ease, color .2s ease;
+  }
+  body::before{
+    content:'';
+    position:fixed;inset:0;
+    background-image:radial-gradient(circle at 1px 1px, rgba(128,110,90,var(--dotop)) 1px, transparent 0);
+    background-size:28px 28px;
+    pointer-events:none;
+    z-index:0;
+  }
+  a{color:inherit;text-decoration:none;}
+  .wrap{max-width:1080px;margin:0 auto;padding:0 32px;position:relative;z-index:1;}
+  ::selection{background:var(--amber);color:#FFFFFF;}
+
+  /* NAV */
+  nav{
+    position:sticky;top:0;z-index:50;
+    background:var(--nav-bg);
+    backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--line);
+  }
+  nav .wrap{display:flex;align-items:center;justify-content:space-between;height:64px;}
+  .logo{
+    font-family:var(--mono);font-weight:700;font-size:16px;
+    display:flex;align-items:center;gap:10px;
+  }
+  .logo-icon{
+    width:36px;height:36px;border-radius:8px;
+    background:var(--bg-raised-2);border:1px solid var(--line);
+    display:flex;align-items:center;justify-content:center;
+    box-shadow:0 2px 8px rgba(0,0,0,0.08);
+  }
+  .logo-icon svg{display:block;}
+  .navlinks{display:flex;gap:36px;font-size:14px;color:var(--text-dim);}
+  .navlinks a:hover{color:var(--text);}
+  .nav-cta{
+    font-family:var(--mono);font-size:13px;font-weight:500;
+    background:var(--amber);color:#FFFFFF;
+    padding:9px 18px;border-radius:6px;
+    transition:background .15s ease;
+  }
+  .nav-cta:hover{background:var(--amber-glow);}
+  .nav-right{display:flex;align-items:center;gap:16px;}
+  @media(max-width:760px){.navlinks{display:none;}}
+
+  /* HERO */
+  .hero{
+    padding:56px 0 48px;
+    position:relative;
+    overflow:hidden;
+  }
+  .hero .wrap{
+    display:grid;
+    grid-template-columns:1fr 380px;
+    gap:40px;
+    align-items:center;
+  }
+  .hero-glow{
+    position:absolute;
+    top:-140px; right:-100px;
+    width:520px; height:520px;
+    background:radial-gradient(circle, rgba(0,152,240,0.1) 0%, rgba(0,152,240,0) 70%);
+    pointer-events:none;
+  }
+  .eyebrow{
+    font-family:var(--mono);font-size:13px;color:var(--green);
+    display:inline-flex;align-items:center;gap:8px;
+    padding:6px 14px 6px 10px;
+    border:1px solid var(--hero-border);
+    background:#fff;
+    border-radius:999px;
+    letter-spacing:0.02em;
+    margin-bottom:28px;
+  }
+  .eyebrow::before{
+    content:'';width:7px;height:7px;background:var(--green);border-radius:50%;
+    box-shadow:0 0 0 0 rgba(0,152,240,0.4);
+    animation:badge-pulse 2.2s ease-out infinite;
+  }
+  @keyframes badge-pulse{
+    0%{ box-shadow:0 0 0 0 rgba(0,152,240,0.35); }
+    70%{ box-shadow:0 0 0 7px rgba(0,152,240,0); }
+    100%{ box-shadow:0 0 0 0 rgba(0,152,240,0); }
+  }
+  h1{
+    font-family:var(--serif);
+    font-size:clamp(28px,4vw,48px);
+    font-weight:700;
+    letter-spacing:-0.01em;
+    line-height:1.28;
+    max-width:720px;
+    color:var(--text);
+  }
+  h1 .hl{
+    color:var(--green);
+    position:relative;
+    white-space:nowrap;
+  }
+  h1 .hl svg.underline{
+    position:absolute;
+    left:0; bottom:-6px;
+    width:100%; height:8px;
+  }
+  .sub{
+    margin-top:22px;
+    font-size:16px;
+    color:var(--text-dim);
+    max-width:560px;
+    line-height:1.75;
+  }
+  .sub b{color:var(--text); font-weight:500;}
+  .hero-ctas{display:flex;gap:12px;margin-top:36px;flex-wrap:wrap;}
+  .btn{
+    font-family:var(--sans);font-size:14px;font-weight:600;
+    padding:13px 22px;border-radius:8px;
+    display:inline-flex;align-items:center;gap:8px;
+    transition:transform .12s ease, background .15s ease, border-color .15s ease;
+    border:1px solid transparent;
+  }
+  .btn:active{transform:scale(0.97);}
+  .btn-primary{background:var(--green);color:#FFFFFF;}
+  .btn-primary:hover{background:#0077CC;}
+  .btn-ghost{border:1px solid var(--hero-border);background:#fff;color:var(--text);}
+  .btn-ghost:hover{border-color:var(--text-faint);}
+  .platforms{
+    margin-top:28px;font-family:var(--mono);font-size:12px;color:var(--text-dim);
+    display:flex;gap:0;flex-wrap:nowrap;align-items:center;
+    border-top:1px solid var(--hero-border);
+    padding-top:22px;
+  }
+  .platforms span{
+    display:flex;align-items:center;gap:7px;
+    padding:0 14px 0 0;
+    margin-right:14px;
+    border-right:1px solid var(--hero-border);
+    white-space:nowrap;
+  }
+  .platforms span:last-child{border-right:none; margin-right:0; padding-right:0;}
+  .platforms svg{flex-shrink:0; color:var(--text-faint);}
+
+  /* Hero right-column signal node map */
+  .signal{ position:relative; width:100%; }
+  .signal .node-label{
+    font-family:var(--mono);
+    font-size:10px;
+    fill:var(--text-faint);
+  }
+  @media(max-width:860px){
+    .hero .wrap{grid-template-columns:1fr; padding:0 32px;}
+    .signal{display:none;}
+    .platforms{flex-wrap:wrap; row-gap:12px;}
+  }
+
+  /* TERMINAL MOCKUP */
+  .terminal{
+    grid-column:1 / -1;
+    margin-top:48px;
+    background:var(--bg-raised);
+    border:1px solid var(--line);
+    border-radius:10px;
+    overflow:hidden;
+    box-shadow:var(--shadow);
+  }
+  .term-bar{
+    display:flex;align-items:center;gap:8px;
+    padding:12px 16px;border-bottom:1px solid var(--line);
+    background:var(--bg-raised-2);
+  }
+  .term-bar i{width:10px;height:10px;border-radius:50%;background:var(--line);}
+  .term-title{
+    margin-left:8px;font-family:var(--mono);font-size:12px;color:var(--text-faint);
+  }
+  /* APP WINDOW MOCKUP */
+  .app-body{padding:36px 32px 28px;display:flex;flex-direction:column;align-items:center;}
+  .app-status-dot{
+    display:flex;align-items:center;gap:8px;
+    font-family:var(--mono);font-size:13px;color:var(--green);font-weight:500;
+    margin-bottom:24px;
+  }
+  .app-status-dot i{width:7px;height:7px;border-radius:50%;background:var(--green);box-shadow:0 0 0 3px rgba(95,214,138,0.18);}
+  .power-ring{
+    width:148px;height:148px;border-radius:50%;
+    display:flex;align-items:center;justify-content:center;
+    position:relative;margin-bottom:22px;
+  }
+  .power-ring::before{
+    content:'';position:absolute;inset:0;border-radius:50%;
+    border:2px solid var(--line);
+  }
+  .power-ring::after{
+    content:'';position:absolute;inset:-5px;border-radius:50%;
+    border:2px dashed var(--amber);opacity:0.4;
+    animation:spin 14s linear infinite;
+  }
+  @keyframes spin{to{transform:rotate(360deg);}}
+  .power-core{
+    width:104px;height:104px;border-radius:50%;
+    background:var(--bg-raised-2);border:1px solid var(--line);
+    display:flex;align-items:center;justify-content:center;
+    color:var(--amber);
+  }
+  .power-core svg{width:36px;height:36px;}
+  .app-node{
+    font-family:var(--mono);font-size:13px;color:var(--text-dim);
+    display:flex;align-items:center;gap:8px;
+    background:var(--bg-raised-2);border:1px solid var(--line);
+    padding:9px 16px;border-radius:20px;
+  }
+  .app-node b{color:var(--text);font-weight:500;}
+  .app-node .ms{color:var(--green);}
+
+  /* STATUS ROW under terminal */
+  .status-row{
+    display:flex;gap:0;border-top:1px solid var(--line);
+  }
+  .status-cell{
+    flex:1;padding:16px 20px;border-right:1px solid var(--line);
+    font-family:var(--mono);font-size:12px;color:var(--text-faint);
+  }
+  .status-cell:last-child{border-right:none;}
+  .status-cell b{display:block;color:var(--green);font-size:13px;margin-bottom:4px;font-weight:500;}
+
+  /* SECTIONS */
+  section{padding:88px 0;border-top:1px solid var(--line);}
+  .section-head{max-width:600px;margin-bottom:56px;}
+  .section-eyebrow{
+    font-family:var(--mono);font-size:12px;color:var(--amber-dim);
+    text-transform:uppercase;letter-spacing:0.08em;margin-bottom:14px;
+  }
+  h2{
+    font-family:var(--mono);font-size:clamp(24px,3vw,32px);font-weight:700;
+    letter-spacing:-0.01em;
+  }
+  .section-desc{margin-top:14px;color:var(--text-dim);font-size:16px;}
+
+  /* FEATURES */
+  .feat-grid{
+    display:grid;grid-template-columns:repeat(3,1fr);gap:1px;
+    background:var(--line);border:1px solid var(--line);border-radius:10px;overflow:hidden;
+  }
+  .feat{
+    background:var(--bg-raised);padding:32px 28px;
+  }
+  .feat h3{
+    font-size:17px;font-weight:600;margin-bottom:10px;
+    display:flex;align-items:center;gap:9px;
+  }
+  .feat-num{
+    font-family:var(--mono);font-size:13px;color:var(--text-faint);font-weight:500;
+  }
+  .feat-icon{color:var(--amber);opacity:0.9;}
+  .feat-icon svg{display:block;width:18px;height:18px;}
+  .feat p{font-size:14px;color:var(--text-dim);line-height:1.65;}
+  @media(max-width:760px){.feat-grid{grid-template-columns:1fr;}}
+
+  /* PRICING */
+  .price-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;}
+  .price-card{
+    background:var(--bg-raised);
+    border:1px solid var(--line);
+    border-radius:12px;
+    padding:32px 28px;
+    display:flex;flex-direction:column;
+  }
+  .price-card.featured{
+    border:1.5px solid var(--amber);
+    background:var(--bg-raised-2);
+    position:relative;
+  }
+  .price-badge{
+    position:absolute;top:-12px;left:28px;
+    background:var(--amber);color:#FFFFFF;
+    font-family:var(--mono);font-size:11px;font-weight:700;
+    padding:4px 10px;border-radius:5px;
+  }
+  .price-tier{font-family:var(--mono);font-size:13px;color:var(--text-dim);text-transform:uppercase;letter-spacing:0.06em;}
+  .price-amount{font-family:var(--mono);font-size:36px;font-weight:800;margin:14px 0 4px;}
+  .price-amount span{font-size:14px;color:var(--text-faint);font-weight:400;}
+  .price-desc{font-size:13px;color:var(--text-dim);margin-bottom:24px;}
+  .price-list{list-style:none;margin-bottom:28px;flex:1;}
+  .price-list li{
+    font-size:14px;color:var(--text-dim);padding:9px 0;
+    border-top:1px solid var(--line);
+    display:flex;align-items:center;gap:10px;
+  }
+  .price-list li:first-child{border-top:none;}
+  .price-list li::before{content:'+';font-family:var(--mono);color:var(--green);font-weight:700;}
+  .price-btn{
+    text-align:center;padding:12px;border-radius:7px;
+    font-family:var(--mono);font-size:13px;font-weight:500;
+    border:1px solid var(--line);
+  }
+  .price-card.featured .price-btn{background:var(--amber);color:#FFFFFF;border:none;}
+  .price-btn:hover{border-color:var(--text-faint);}
+  @media(max-width:820px){.price-grid{grid-template-columns:1fr;}}
+
+  /* FOOTER */
+  footer{padding:48px 0;border-top:1px solid var(--line);}
+  footer .wrap{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px;}
+  .footer-meta{font-family:var(--mono);font-size:12px;color:var(--text-faint);}
+  .footer-links{display:flex;gap:24px;font-size:13px;color:var(--text-dim);}
+
+  @media(max-width:600px){
+    .wrap{padding:0 20px;}
+    .hero{padding:48px 0 36px;}
+    section{padding:64px 0;}
+    .status-row{flex-direction:column;}
+    .status-cell{border-right:none;border-bottom:1px solid var(--line);}
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    .power-ring::after{animation:none;}
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="wrap">
+    <div class="logo">
+      <span class="logo-icon">
+        <svg viewBox="0 0 1024 1024" width="28" height="28" xmlns="http://www.w3.org/2000/svg"><path d="M234.666667 463.445333a12.885333 12.885333 0 0 1-9.045334-21.930666l116.138667-116.053334a12.8 12.8 0 0 1 18.090667 18.090667L243.712 459.690667a12.885333 12.885333 0 0 1-9.045333 3.754666zM573.354667 802.133333a13.056 13.056 0 0 1-9.045334-3.754666 12.885333 12.885333 0 0 1 0-18.090667l116.138667-116.138667A12.8 12.8 0 0 1 698.538667 682.666667l-116.053334 115.712a13.056 13.056 0 0 1-9.130666 3.754666zM529.834667 665.088A97.877333 97.877333 0 0 1 460.8 636.416L387.584 563.2a98.304 98.304 0 0 1 0-138.752l159.488-159.146667a98.048 98.048 0 0 1 61.269333-28.416L788.309333 221.866667a12.373333 12.373333 0 0 1 10.069334 3.669333 12.629333 12.629333 0 0 1 3.754666 10.154667l-15.018666 179.968a98.048 98.048 0 0 1-28.416 61.269333L599.210667 636.416a97.706667 97.706667 0 0 1-69.376 28.672z m245.504-416.426667l-164.864 13.738667a72.448 72.448 0 0 0-45.312 20.992L405.674667 442.88a72.704 72.704 0 0 0 0 102.4l72.874666 72.874667a72.704 72.704 0 0 0 102.4 0l159.658667-159.317334a72.448 72.448 0 0 0 20.992-45.312z" fill="#333"></path><path d="M292.693333 637.610667a13.056 13.056 0 0 1-9.045333-3.754667 12.885333 12.885333 0 0 1 0-18.090667l58.112-58.112a12.8 12.8 0 1 1 18.090667 18.176l-58.026667 58.026667a13.056 13.056 0 0 1-9.130667 3.754667zM287.914667 748.885333a12.373333 12.373333 0 0 1-9.045334-3.754666 12.714667 12.714667 0 0 1 0-18.090667l116.138667-116.138667a12.8 12.8 0 0 1 18.090667 18.090667L296.96 745.130667a12.544 12.544 0 0 1-9.045333 3.754666zM399.189333 744.106667a12.885333 12.885333 0 0 1-9.045333-21.930667l58.026667-58.026667A12.8 12.8 0 0 1 466.346667 682.666667l-58.112 58.112a12.885333 12.885333 0 0 1-9.045334 3.328z" fill="#0098F0"></path><path d="M700.586667 430.08A12.885333 12.885333 0 0 1 691.2 426.666667L597.333333 332.8a12.885333 12.885333 0 0 1 0-18.090667 12.714667 12.714667 0 0 1 18.090667 0l93.866667 93.866667a12.8 12.8 0 0 1-8.704 21.504z" fill="#333"></path></svg>
+      </span>
+      飞云
+    </div>
+    <div class="navlinks">
+      <a href="#features">功能</a>
+      <a href="pricing.html">价格</a>
+      <a href="tutorial.html">使用方法</a>
+      <a href="tutorial.html#faq">常见问题</a>
+    </div>
+    <div class="nav-right">
+      <a href="tutorial.html" class="nav-cta">立即下载</a>
+    </div>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="hero-glow"></div>
+  <div class="wrap">
+    <div>
+      <div class="eyebrow">v2.1 · 全平台同步发布</div>
+      <h1>一键连接，<br>飞速访问<span class="hl">全球内容<svg class="underline" viewBox="0 0 100 8" preserveAspectRatio="none"><path d="M0,5 Q25,0 50,4 T100,3" stroke="currentColor" stroke-width="2" fill="none" opacity="0.5"/></svg></span>。</h1>
+      <p class="sub">免费试用，无需注册。打开 App 轻触一下，即可访问 <b>Google、YouTube、X (Twitter)、Facebook、Instagram</b> 等全球服务。</p>
+      <div class="hero-ctas">
+        <a href="tutorial.html" class="btn btn-primary">免费下载
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </a>
+        <a href="tutorial.html" class="btn btn-ghost">查看使用方法</a>
+      </div>
+      <div class="platforms">
+        <span><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="5" y="2" width="14" height="20" rx="2"/><path d="M9 18h6"/></svg>Android / iOS</span>
+        <span><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="4" width="18" height="13" rx="1.5"/><path d="M8 21h8M12 17v4"/></svg>Windows / macOS / Linux</span>
+        <span><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 0 1 0 18a14 14 0 0 1 0-18"/></svg>全球 20+ 节点</span>
+        <span><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 2l8 3.5v6c0 5-3.4 8.7-8 10.5-4.6-1.8-8-5.5-8-10.5v-6z"/></svg>不记录使用记录</span>
+      </div>
+    </div>
+
+    <div class="signal">
+      <svg viewBox="0 0 400 340" width="100%" height="auto">
+        <path d="M40,90 Q30,60 65,55 Q95,45 110,65 Q130,60 128,85 Q140,100 118,112 Q120,135 95,132 Q70,145 55,125 Q28,120 40,90 Z" fill="#EFF6FF" stroke="var(--hero-line)" stroke-width="1.2"/>
+        <path d="M95,160 Q85,155 92,175 Q88,205 100,225 Q95,250 112,255 Q125,235 120,205 Q130,180 115,165 Q105,150 95,160 Z" fill="#EFF6FF" stroke="var(--hero-line)" stroke-width="1.2"/>
+        <path d="M195,55 Q190,40 210,42 Q225,35 232,50 Q245,48 240,65 Q248,78 232,80 Q220,92 205,82 Q190,75 195,55 Z" fill="#EFF6FF" stroke="var(--hero-line)" stroke-width="1.2"/>
+        <path d="M200,90 Q192,88 195,110 Q188,135 200,155 Q198,175 215,178 Q228,160 222,135 Q230,110 218,95 Q210,85 200,90 Z" fill="#EFF6FF" stroke="var(--hero-line)" stroke-width="1.2"/>
+        <path d="M245,50 Q260,35 295,42 Q330,38 345,58 Q360,65 350,85 Q355,105 330,110 Q320,130 295,120 Q270,128 260,105 Q240,95 245,70 Q238,58 245,50 Z" fill="#EFF6FF" stroke="var(--hero-line)" stroke-width="1.2"/>
+        <path d="M300,190 Q290,185 298,205 Q292,222 310,225 Q328,222 322,202 Q330,188 315,185 Q305,182 300,190 Z" fill="#EFF6FF" stroke="var(--hero-line)" stroke-width="1.2"/>
+        <line x1="112" y1="88" x2="215" y2="65" stroke="var(--hero-line)" stroke-width="1" stroke-dasharray="3 4"/>
+        <line x1="112" y1="88" x2="300" y2="68" stroke="var(--hero-line)" stroke-width="1" stroke-dasharray="3 4"/>
+        <line x1="112" y1="88" x2="313" y2="200" stroke="var(--hero-line)" stroke-width="1" stroke-dasharray="3 4"/>
+        <line x1="112" y1="88" x2="207" y2="130" stroke="var(--hero-line)" stroke-width="1" stroke-dasharray="3 4"/>
+        <line x1="112" y1="88" x2="108" y2="195" stroke="var(--hero-line)" stroke-width="1" stroke-dasharray="3 4"/>
+        <circle cx="112" cy="88" r="6" fill="var(--green)"/>
+        <circle cx="112" cy="88" r="10" fill="none" stroke="var(--green)" stroke-width="1" opacity="0.4"/>
+        <circle cx="215" cy="65" r="4" fill="var(--text-dim)"/>
+        <circle cx="300" cy="68" r="4" fill="var(--text-dim)"/>
+        <circle cx="313" cy="200" r="4" fill="var(--text-dim)"/>
+        <circle cx="207" cy="130" r="4" fill="var(--text-dim)"/>
+        <circle cx="108" cy="195" r="4" fill="var(--text-dim)"/>
+        <text x="122" y="80" class="node-label">HOME</text>
+        <text x="225" y="58" class="node-label">EU</text>
+        <text x="310" y="62" class="node-label">JP</text>
+        <text x="290" y="197" class="node-label">SG</text>
+      </svg>
+    </div>
+
+    <div class="terminal">
+      <div class="term-bar">
+        <i style="background:var(--term-btn)"></i><i style="background:var(--term-btn)"></i><i style="background:var(--term-btn)"></i>
+        <span class="term-title">飞云客户端</span>
+      </div>
+      <div class="app-body">
+        <div class="app-status-dot"><i></i>已连接</div>
+        <div class="power-ring">
+          <div class="power-core">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v10"></path><path d="M6.3 6.3a8 8 0 1 0 11.4 0"></path></svg>
+          </div>
+        </div>
+        <div class="app-node">香港节点 · 自动优选 <span class="ms">58ms</span></div>
+      </div>
+      <div class="status-row">
+        <div class="status-cell"><b>已连接</b>香港节点 · 58ms</div>
+        <div class="status-cell"><b>不限速</b>畅看视频</div>
+        <div class="status-cell"><b>已加密</b>隐私受保护</div>
+        <div class="status-cell"><b>3 台设备</b>同账号在线</div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<section id="features">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="section-eyebrow">Features</div>
+      <h2>专为普通用户打造</h2>
+      <p class="section-desc">不需要设置，打开就能用。</p>
+    </div>
+    <div class="feat-grid">
+      <div class="feat">
+        <h3><span class="feat-num">1</span>一键连接<span class="feat-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 4 14 11 14 10 22 20 10 13 10 13 2"></polygon></svg></span></h3>
+        <p>打开 App 点一下即可连接，自动选择当前最快的节点，无需手动设置。</p>
+      </div>
+      <div class="feat">
+        <h3><span class="feat-num">2</span>隐私保护<span class="feat-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l8 4v6c0 5-3.4 8.4-8 10-4.6-1.6-8-5-8-10V6l8-4z"></path></svg></span></h3>
+        <p>全程加密传输，飞云承诺不记录、不存储任何用户的浏览与使用记录。</p>
+      </div>
+      <div class="feat">
+        <h3><span class="feat-num">3</span>全球节点<span class="feat-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"></circle><path d="M3 12h18M12 3c2.5 2.6 3.8 5.7 3.8 9s-1.3 6.4-3.8 9c-2.5-2.6-3.8-5.7-3.8-9S9.5 5.6 12 3z"></path></svg></span></h3>
+        <p>覆盖香港、日本、新加坡、美国等 20+ 地区，看视频、刷资讯都顺畅。</p>
+      </div>
+      <div class="feat">
+        <h3><span class="feat-num">4</span>无需注册<span class="feat-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 16a8 8 0 0 1 16 0"></path><path d="M12 16l4-5"></path><circle cx="12" cy="16" r="1"></circle></svg></span></h3>
+        <p>全程无需注册和登录，安装即可使用。</p>
+      </div>
+      <div class="feat">
+        <h3><span class="feat-num">5</span>跨平台使用<span class="feat-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="13" height="9" rx="1.5"></rect><rect x="8" y="15" width="13" height="9" rx="1.5"></rect></svg></span></h3>
+        <p>一个激活码同时支持手机、电脑使用，随时切换设备。</p>
+      </div>
+      <div class="feat">
+        <h3><span class="feat-num">6</span>真人客服<span class="feat-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8 8 0 0 1-11.5 7.2L4 20l1.3-5.5A8 8 0 1 1 21 11.5z"></path></svg></span></h3>
+        <p>遇到问题随时联系在线客服，真人解答，不是机器人。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="how">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="section-eyebrow">How it works</div>
+      <h2>三步开始使用</h2>
+      <p class="section-desc">从下载到连接，几分钟搞定。</p>
+    </div>
+    <div class="feat-grid">
+      <div class="feat">
+        <h3><span class="feat-num">1</span>下载安装<span class="feat-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v13"></path><path d="M7 11l5 5 5-5"></path><path d="M5 21h14"></path></svg></span></h3>
+        <p>选择你的设备类型，下载对应版本的飞云客户端。</p>
+      </div>
+      <div class="feat">
+        <h3><span class="feat-num">2</span>一键链接<span class="feat-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="3.4"></circle><path d="M5 20c0-3.6 3.1-6 7-6s7 2.4 7 6"></path></svg></span></h3>
+        <p>点击连接按钮，自动连接最优节点，立即开始使用。</p>
+      </div>
+      <div class="feat">
+        <h3><span class="feat-num">3</span>按量使用<span class="feat-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"></circle><path d="M9 12.5l2 2 4.5-4.5"></path></svg></span></h3>
+        <p>按量使用，通过激活码激活付费套餐。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="pricing">
+  <div class="wrap" style="text-align:center;">
+    <h2 style="margin-bottom:16px;">选择适合你的套餐</h2>
+    <p class="section-desc" style="margin:0 auto 32px;">月付 ¥9 起，支持支付宝 / 微信支付，购买即得激活码。</p>
+    <a href="pricing.html" class="btn btn-primary" style="display:inline-block;">查看套餐 →</a>
+  </div>
+</section>
+
+<section id="download">
+  <div class="wrap" style="text-align:center;">
+    <h2 style="margin-bottom:16px;">现在就开始，自由连接世界。</h2>
+    <p class="section-desc" style="margin:0 auto 32px;">免费试用，全程无需注册。支持 Android、iOS、Windows、macOS、Linux。</p>
+    <div class="hero-ctas" style="justify-content:center;">
+      <a href="tutorial.html#android" class="btn btn-primary">Android 下载</a>
+      <a href="tutorial.html#ios" class="btn btn-ghost">iOS 下载</a>
+      <a href="tutorial.html#windows" class="btn btn-ghost">Windows 下载</a>
+      <a href="tutorial.html#macos" class="btn btn-ghost">macOS 下载</a>
+      <a href="tutorial.html#linux" class="btn btn-ghost">Linux 下载</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="footer-meta">© 2026 飞云 · 让连接更自由</div>
+    <div class="footer-links">
+      <a href="tutorial.html#faq">常见问题</a>
+      <a href="#">隐私政策</a>
+      <a href="#">联系客服</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+// (theme toggle removed — fixed to light mode)
+</script>
+</body>
+</html>

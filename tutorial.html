@@ -1,0 +1,614 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>飞云 — 使用方法</title>
+<style>
+  :root{
+    --bg:#FFFFFF;
+    --bg-raised:#FFFFFF;
+    --bg-raised-2:#EFF6FF;
+    --line:#DBEAFE;
+    --text:#0F172A;
+    --text-dim:#475569;
+    --text-faint:#94A3B8;
+    --accent:#0098F0;
+    --accent-dim:#0077CC;
+    --accent-glow:#0098F0;
+    --green:#0284C7;
+    --mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    --sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+    --dotop:0.04;
+    --shadow:0 30px 60px -30px rgba(0,0,0,0.1);
+    --nav-bg:rgba(248,250,252,0.88);
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--bg);color:var(--text);
+    font-family:var(--sans);line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+  body::before{
+    content:'';position:fixed;inset:0;
+    background-image:radial-gradient(circle at 1px 1px, rgba(128,110,90,var(--dotop)) 1px, transparent 0);
+    background-size:28px 28px;pointer-events:none;z-index:0;
+  }
+  a{color:inherit;text-decoration:none;}
+  .wrap{max-width:1080px;margin:0 auto;padding:0 32px;position:relative;z-index:1;}
+  ::selection{background:var(--accent);color:#FFFFFF;}
+
+  /* NAV */
+  nav{
+    position:sticky;top:0;z-index:50;
+    background:var(--nav-bg);backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--line);
+  }
+  nav .wrap{display:flex;align-items:center;justify-content:space-between;height:64px;}
+  .logo{
+    font-family:var(--mono);font-weight:700;font-size:16px;
+    display:flex;align-items:center;gap:10px;
+  }
+  .logo-icon{
+    width:36px;height:36px;border-radius:8px;
+    background:var(--bg-raised-2);border:1px solid var(--line);
+    display:flex;align-items:center;justify-content:center;
+    box-shadow:0 2px 8px rgba(0,0,0,0.08);
+  }
+  .logo-icon svg{display:block;}
+  .navlinks{display:flex;gap:36px;font-size:14px;color:var(--text-dim);}
+  .navlinks a:hover{color:var(--text);}
+  .nav-cta{
+    font-family:var(--mono);font-size:13px;font-weight:500;
+    background:var(--accent);color:#FFFFFF;
+    padding:9px 18px;border-radius:6px;
+    transition:background .15s ease;
+  }
+  .nav-cta:hover{background:var(--accent-glow);}
+  .nav-right{display:flex;align-items:center;gap:16px;}
+  @media(max-width:760px){.navlinks{display:none;}}
+
+  /* PAGE HEADER */
+  .page-header{padding:48px 0 32px;text-align:center;}
+  .page-header h1{
+    font-family:var(--mono);font-size:clamp(28px,4vw,42px);
+    font-weight:800;letter-spacing:-0.02em;
+  }
+  .page-header h1 .hl{color:var(--accent);}
+  .page-header p{margin-top:12px;color:var(--text-dim);font-size:17px;max-width:520px;margin-left:auto;margin-right:auto;}
+
+  /* TABS */
+  .tabs{
+    display:flex;gap:4px;justify-content:center;flex-wrap:wrap;
+    margin-bottom:40px;
+    background:var(--bg-raised);border:1px solid var(--line);
+    border-radius:12px;padding:6px;
+    max-width:640px;margin-left:auto;margin-right:auto;
+  }
+  .tab-btn{
+    font-family:var(--mono);font-size:13px;font-weight:500;
+    padding:10px 20px;border-radius:8px;cursor:pointer;
+    color:var(--text-dim);background:transparent;border:none;
+    transition:all .15s ease;
+  }
+  .tab-btn:hover{color:var(--text);background:var(--bg-raised-2);}
+  .tab-btn.active{background:var(--accent);color:#FFFFFF;}
+
+  /* TUTORIAL CONTENT */
+  .tutorial-panel{display:none;}
+  .tutorial-panel.active{display:block;}
+
+  .step-list{max-width:720px;margin:0 auto;}
+  .step{
+    background:var(--bg-raised);border:1px solid var(--line);
+    border-radius:12px;padding:28px 32px;margin-bottom:16px;
+    position:relative;
+    transition:border-color .15s ease;
+  }
+  .step:hover{border-color:var(--text-faint);}
+  .step-num{
+    position:absolute;top:-12px;left:28px;
+    background:var(--accent);color:#FFFFFF;
+    font-family:var(--mono);font-size:12px;font-weight:700;
+    width:28px;height:28px;border-radius:50%;
+    display:flex;align-items:center;justify-content:center;
+  }
+  .step h3{
+    font-size:17px;font-weight:600;margin-bottom:10px;margin-top:4px;
+    display:flex;align-items:center;gap:10px;
+  }
+  .step h3 svg{width:18px;height:18px;color:var(--accent);opacity:0.9;flex-shrink:0;}
+  .step p{font-size:14px;color:var(--text-dim);line-height:1.7;}
+  .step .note{
+    margin-top:12px;padding:12px 16px;
+    background:var(--bg-raised-2);border:1px solid var(--line);
+    border-radius:8px;font-size:13px;color:var(--text-dim);
+    display:flex;align-items:flex-start;gap:8px;
+  }
+  .step .note svg{width:16px;height:16px;color:var(--accent);flex-shrink:0;margin-top:2px;}
+  .step .code{
+    margin-top:12px;padding:12px 16px;
+    background:var(--bg-raised-2);border:1px solid var(--line);
+    border-radius:8px;font-family:var(--mono);font-size:13px;
+    color:var(--green);overflow-x:auto;
+    word-break:break-all;
+  }
+  .step .btn-row{display:flex;gap:10px;margin-top:14px;flex-wrap:wrap;}
+  .step .btn-sm{
+    font-family:var(--mono);font-size:13px;font-weight:500;
+    padding:9px 18px;border-radius:6px;
+    display:inline-flex;align-items:center;gap:8px;
+    background:var(--accent);color:#FFFFFF;
+    transition:background .15s ease;
+  }
+  .step .btn-sm:hover{background:var(--accent-glow);}
+  .step .btn-outline{
+    background:transparent;border:1px solid var(--line);color:var(--text);
+  }
+  .step .btn-outline:hover{border-color:var(--text-faint);background:var(--bg-raised-2);}
+
+  /* Install method sub-tabs */
+  .install-tabs{
+    display:grid;grid-template-columns:1fr 1fr;gap:12px;
+    margin-bottom:24px;
+  }
+  .install-tab{
+    background:var(--bg-raised);border:1.5px solid var(--line);
+    border-radius:10px;padding:18px 20px;cursor:pointer;
+    text-align:left;transition:all .2s ease;
+    display:flex;flex-direction:column;gap:6px;
+  }
+  .install-tab:hover{border-color:var(--text-faint);}
+  .install-tab.active{
+    border-color:var(--accent);
+    background:var(--bg-raised-2);
+    box-shadow:0 0 0 1px var(--accent), 0 4px 12px rgba(0,152,240,0.1);
+  }
+  .install-tab .tab-title{
+    font-family:var(--mono);font-size:14px;font-weight:600;color:var(--text);
+    display:flex;align-items:center;gap:8px;
+  }
+  .install-tab.active .tab-title{color:var(--accent);}
+  .install-tab .tab-title .radio{
+    width:16px;height:16px;border-radius:50%;border:2px solid var(--line);
+    display:flex;align-items:center;justify-content:center;flex-shrink:0;
+    transition:border-color .15s ease;
+  }
+  .install-tab.active .tab-title .radio{border-color:var(--accent);}
+  .install-tab.active .tab-title .radio::after{
+    content:'';width:8px;height:8px;border-radius:50%;background:var(--accent);
+  }
+  .install-tab .tab-desc{
+    font-size:12px;color:var(--text-dim);line-height:1.5;
+    padding-left:0;
+  }
+  .install-panel{display:none;}
+  .install-panel.active{display:block;}
+
+  /* FAQ */
+  .faq-section{padding:64px 0;border-top:1px solid var(--line);}
+  .faq-head{text-align:center;margin-bottom:40px;}
+  .faq-head h2{font-family:var(--mono);font-size:24px;font-weight:700;}
+  .faq-head p{color:var(--text-dim);margin-top:8px;font-size:15px;}
+  .faq-list{max-width:720px;margin:0 auto;}
+  .faq-item{
+    border:1px solid var(--line);border-radius:10px;
+    margin-bottom:12px;overflow:hidden;
+    transition:border-color .15s ease;
+  }
+  .faq-item:hover{border-color:var(--text-faint);}
+  .faq-q{
+    padding:18px 24px;cursor:pointer;
+    font-size:15px;font-weight:600;
+    display:flex;align-items:center;justify-content:space-between;gap:12px;
+    user-select:none;
+  }
+  .faq-q .arrow{
+    font-family:var(--mono);font-size:18px;color:var(--text-faint);
+    transition:transform .2s ease;flex-shrink:0;
+  }
+  .faq-item.open .faq-q .arrow{transform:rotate(45deg);}
+  .faq-a{
+    max-height:0;overflow:hidden;transition:max-height .3s ease;
+    padding:0 24px;
+  }
+  .faq-item.open .faq-a{max-height:300px;padding:0 24px 18px;}
+  .faq-a p{font-size:14px;color:var(--text-dim);line-height:1.7;}
+
+  /* FOOTER */
+  footer{padding:48px 0;border-top:1px solid var(--line);}
+  footer .wrap{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px;}
+  .footer-meta{font-family:var(--mono);font-size:12px;color:var(--text-faint);}
+  .footer-links{display:flex;gap:24px;font-size:13px;color:var(--text-dim);}
+
+  @media(max-width:600px){
+    .wrap{padding:0 20px;}
+    .step{padding:24px 20px;}
+    .tabs{gap:2px;padding:4px;}
+    .tab-btn{padding:8px 14px;font-size:12px;}
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="wrap">
+    <a href="index.html" class="logo">
+      <span class="logo-icon">
+        <svg viewBox="0 0 1024 1024" width="28" height="28" xmlns="http://www.w3.org/2000/svg"><path d="M234.666667 463.445333a12.885333 12.885333 0 0 1-9.045334-21.930666l116.138667-116.053334a12.8 12.8 0 0 1 18.090667 18.090667L243.712 459.690667a12.885333 12.885333 0 0 1-9.045333 3.754666zM573.354667 802.133333a13.056 13.056 0 0 1-9.045334-3.754666 12.885333 12.885333 0 0 1 0-18.090667l116.138667-116.138667A12.8 12.8 0 0 1 698.538667 682.666667l-116.053334 115.712a13.056 13.056 0 0 1-9.130666 3.754666zM529.834667 665.088A97.877333 97.877333 0 0 1 460.8 636.416L387.584 563.2a98.304 98.304 0 0 1 0-138.752l159.488-159.146667a98.048 98.048 0 0 1 61.269333-28.416L788.309333 221.866667a12.373333 12.373333 0 0 1 10.069334 3.669333 12.629333 12.629333 0 0 1 3.754666 10.154667l-15.018666 179.968a98.048 98.048 0 0 1-28.416 61.269333L599.210667 636.416a97.706667 97.706667 0 0 1-69.376 28.672z m245.504-416.426667l-164.864 13.738667a72.448 72.448 0 0 0-45.312 20.992L405.674667 442.88a72.704 72.704 0 0 0 0 102.4l72.874666 72.874667a72.704 72.704 0 0 0 102.4 0l159.658667-159.317334a72.448 72.448 0 0 0 20.992-45.312z" fill="#333"></path><path d="M292.693333 637.610667a13.056 13.056 0 0 1-9.045333-3.754667 12.885333 12.885333 0 0 1 0-18.090667l58.112-58.112a12.8 12.8 0 1 1 18.090667 18.176l-58.026667 58.026667a13.056 13.056 0 0 1-9.130667 3.754667zM287.914667 748.885333a12.373333 12.373333 0 0 1-9.045334-3.754666 12.714667 12.714667 0 0 1 0-18.090667l116.138667-116.138667a12.8 12.8 0 0 1 18.090667 18.090667L296.96 745.130667a12.544 12.544 0 0 1-9.045333 3.754666zM399.189333 744.106667a12.885333 12.885333 0 0 1-9.045333-21.930667l58.026667-58.026667A12.8 12.8 0 0 1 466.346667 682.666667l-58.112 58.112a12.885333 12.885333 0 0 1-9.045334 3.328z" fill="#0098F0"></path><path d="M700.586667 430.08A12.885333 12.885333 0 0 1 691.2 426.666667L597.333333 332.8a12.885333 12.885333 0 0 1 0-18.090667 12.714667 12.714667 0 0 1 18.090667 0l93.866667 93.866667a12.8 12.8 0 0 1-8.704 21.504z" fill="#333"></path></svg>
+      </span>
+      飞云
+    </a>
+    <div class="navlinks">
+      <a href="index.html#features">功能</a>
+      <a href="index.html#pricing">价格</a>
+      <a href="tutorial.html">使用方法</a>
+      <a href="#faq">常见问题</a>
+    </div>
+    <div class="nav-right">
+      <a href="#platformTabs" class="nav-cta">立即下载</a>
+    </div>
+  </div>
+</nav>
+
+<div class="page-header">
+  <div class="wrap">
+    <h1>使用<span class="hl">方法</span></h1>
+    <p>选择你的设备平台，按照步骤操作，不到一分钟即可开始使用。</p>
+  </div>
+</div>
+
+<div class="wrap">
+  <div class="tabs" id="platformTabs">
+    <button class="tab-btn active" data-tab="android">Android</button>
+    <button class="tab-btn" data-tab="ios">iOS</button>
+    <button class="tab-btn" data-tab="windows">Windows</button>
+    <button class="tab-btn" data-tab="macos">macOS</button>
+    <button class="tab-btn" data-tab="linux">Linux</button>
+  </div>
+
+  <!-- Android -->
+  <div class="tutorial-panel active" id="panel-android">
+    <div class="step-list">
+      <div class="step">
+        <div class="step-num"></div>
+        <h3>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v13"></path><path d="M7 11l5 5 5-5"></path><path d="M5 21h14"></path></svg>
+          下载安装
+        </h3>
+        <p>点击下方按钮下载 APK 文件，打开文件按提示安装。如果系统提示「未知来源」，请在设置中允许安装。</p>
+        <div class="btn-row">
+          <a href="#" class="btn-sm">下载 APK →</a>
+        </div>
+        <div class="note">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><path d="M12 16v-4"></path><path d="M12 8h.01"></path></svg>
+          <span>部分手机品牌（如华为、小米）可能会拦截安装，需在「设置 → 安全」中允许。</span>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num"></div>
+        <h3>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l8 4v6c0 5-3.4 8.4-8 10-4.6-1.6-8-5-8-10V6l8-4z"></path></svg>
+          允许 VPN 权限
+        </h3>
+        <p>首次连接时，系统会弹出 VPN 权限请求，点击「允许」即可。Android 系统还会显示一个 VPN 连接状态的钥匙图标，这是正常的。</p>
+      </div>
+      <div class="step">
+        <div class="step-num"></div>
+        <h3>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"></circle><path d="M9 12.5l2 2 4.5-4.5"></path></svg>
+          一键连接
+        </h3>
+        <p>打开飞云，点击电源按钮即可连接。连接成功后状态栏会出现钥匙图标，表示加密通道已建立。</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- iOS -->
+  <div class="tutorial-panel" id="panel-ios">
+    <div class="step-list">
+      <div class="install-tabs">
+        <button class="install-tab active" data-install="testflight">
+          <span class="tab-title"><span class="radio"></span>TestFlight 安装</span>
+          <span class="tab-desc">适用于中国大陆 Apple ID 用户，无需海外账号即可安装。</span>
+        </button>
+        <button class="install-tab" data-install="appstore">
+          <span class="tab-title"><span class="radio"></span>App Store 安装</span>
+          <span class="tab-desc">适用于拥有海外 Apple ID的用户，直接在 App Store 中搜索安装。</span>
+        </button>
+      </div>
+
+      <!-- TestFlight -->
+      <div class="install-panel active" id="install-testflight">
+        <div class="step">
+          <div class="step-num"></div>
+          <h3>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12l10-8 10 8-10 8z"></path><path d="M12 4v16"></path></svg>
+            安装 TestFlight
+          </h3>
+          <p>TestFlight 是 Apple 官方的测试应用分发平台。首先在 App Store 中搜索并安装「TestFlight」应用。</p>
+          <div class="btn-row">
+            <a href="https://apps.apple.com/app/testflight/id899247664" target="_blank" class="btn-sm">安装 TestFlight →</a>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num"></div>
+          <h3>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg>
+            打开邀请链接
+          </h3>
+          <p>点击下方按钮打开飞云的 TestFlight 邀请链接，页面会自动跳转到 TestFlight 应用并开始下载安装。</p>
+          <div class="btn-row">
+            <a href="#" class="btn-sm">打开邀请链接 →</a>
+          </div>
+          <div class="note">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><path d="M12 16v-4"></path><path d="M12 8h.01"></path></svg>
+            <span>如果提示「Beta 已满」，说明当前测试名额已满，请使用右侧的 App Store 方式安装。</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- App Store -->
+      <div class="install-panel" id="install-appstore">
+        <div class="step">
+          <div class="step-num"></div>
+          <h3>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v13"></path><path d="M7 11l5 5 5-5"></path><path d="M5 21h14"></path></svg>
+            App Store 下载安装
+          </h3>
+          <p>打开 App Store，搜索「飞云」或点击下方按钮直接跳转到下载页面，点击「获取」安装。</p>
+          <div class="btn-row">
+            <a href="#" class="btn-sm">App Store 下载 →</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Common steps -->
+      <div class="step">
+        <div class="step-num"></div>
+        <h3>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l8 4v6c0 5-3.4 8.4-8 10-4.6-1.6-8-5-8-10V6l8-4z"></path></svg>
+          允许 VPN 权限
+        </h3>
+        <p>首次打开飞云时，系统会弹出「添加 VPN 配置」的提示，点击「允许」并输入系统密码确认。这是建立加密连接所必需的权限。</p>
+        <div class="note">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><path d="M12 16v-4"></path><path d="M12 8h.01"></path></svg>
+          <span>如果没看到弹窗，请前往「设置 → 通用 → VPN 与设备管理」手动添加。</span>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num"></div>
+        <h3>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"></circle><path d="M9 12.5l2 2 4.5-4.5"></path></svg>
+          一键连接
+        </h3>
+        <p>打开飞云，点击中间的电源按钮即可连接。首次连接会自动选择最快的节点，状态变为「已连接」后即可自由上网。</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Windows -->
+  <div class="tutorial-panel" id="panel-windows">
+    <div class="step-list">
+      <div class="step">
+        <div class="step-num"></div>
+        <h3>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v13"></path><path d="M7 11l5 5 5-5"></path><path d="M5 21h14"></path></svg>
+          下载安装
+        </h3>
+        <p>下载 Windows 安装包（.exe），双击运行安装程序，按提示完成安装。支持 Windows 10 及以上版本。</p>
+        <div class="btn-row">
+          <a href="#" class="btn-sm">下载 Windows 版 →</a>
+        </div>
+        <div class="note">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><path d="M12 16v-4"></path><path d="M12 8h.01"></path></svg>
+          <span>如果 Windows Defender 弹出 SmartScreen 警告，点击「更多信息 → 仍要运行」即可。</span>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num"></div>
+        <h3>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"></rect><path d="M3 9h18"></path></svg>
+          启动应用
+        </h3>
+        <p>从桌面或开始菜单启动飞云。应用会自动最小化到系统托盘（右下角），右键托盘图标可快速操作。</p>
+      </div>
+      <div class="step">
+        <div class="step-num"></div>
+        <h3>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"></circle><path d="M9 12.5l2 2 4.5-4.5"></path></svg>
+          一键连接
+        </h3>
+        <p>点击主界面的电源按钮即可连接。连接成功后系统代理会自动设置，浏览器和所有应用的流量都会通过加密通道传输。</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- macOS -->
+  <div class="tutorial-panel" id="panel-macos">
+    <div class="step-list">
+      <div class="step">
+        <div class="step-num"></div>
+        <h3>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v13"></path><path d="M7 11l5 5 5-5"></path><path d="M5 21h14"></path></svg>
+          下载安装
+        </h3>
+        <p>下载 macOS 安装包（.dmg），双击打开后将飞云图标拖入「应用程序」文件夹。</p>
+        <div class="btn-row">
+          <a href="#" class="btn-sm">下载 macOS 版 →</a>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num"></div>
+        <h3>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l8 4v6c0 5-3.4 8.4-8 10-4.6-1.6-8-5-8-10V6l8-4z"></path></svg>
+          信任并打开
+        </h3>
+        <p>首次打开时 macOS 可能提示「无法验证开发者」。前往「系统设置 → 隐私与安全性」，点击「仍要打开」。</p>
+        <div class="note">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><path d="M12 16v-4"></path><path d="M12 8h.01"></path></svg>
+          <span>Apple Silicon (M1/M2/M3) 和 Intel Mac 均支持，无需选择版本。</span>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num"></div>
+        <h3>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"></circle><path d="M9 12.5l2 2 4.5-4.5"></path></svg>
+          一键连接
+        </h3>
+        <p>打开飞云，点击电源按钮连接。首次连接需要授予 VPN 权限，输入系统密码确认即可。</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Linux -->
+  <div class="tutorial-panel" id="panel-linux">
+    <div class="step-list">
+      <div class="step">
+        <div class="step-num"></div>
+        <h3>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v13"></path><path d="M7 11l5 5 5-5"></path><path d="M5 21h14"></path></svg>
+          下载安装
+        </h3>
+        <p>支持 Debian/Ubuntu 系统的 .deb 包和通用 AppImage 格式。推荐使用 deb 包安装：</p>
+        <div class="code">sudo dpkg -i feiyun_*.deb</div>
+        <div class="btn-row">
+          <a href="#" class="btn-sm">下载 deb 包 →</a>
+          <a href="#" class="btn-sm btn-outline">下载 AppImage →</a>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num"></div>
+        <h3>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"></rect><path d="M3 9h18"></path></svg>
+          启动应用
+        </h3>
+        <p>安装完成后在应用菜单中搜索「飞云」启动，或在终端运行：</p>
+        <div class="code">feiyun</div>
+        <div class="note">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><path d="M12 16v-4"></path><path d="M12 8h.01"></path></svg>
+          <span>AppImage 用户需先赋予执行权限：<code>chmod +x feiyun.AppImage</code></span>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num"></div>
+        <h3>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"></circle><path d="M9 12.5l2 2 4.5-4.5"></path></svg>
+          一键连接
+        </h3>
+        <p>点击电源按钮连接。Linux 版本默认使用系统代理模式，如需 TUN 模式请在设置中开启（需要 root 权限）。</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<section class="faq-section" id="faq">
+  <div class="wrap">
+    <div class="faq-head">
+      <h2>常见问题</h2>
+      <p>使用中遇到问题？先看看这里有没有答案。</p>
+    </div>
+    <div class="faq-list">
+      <div class="faq-item">
+        <div class="faq-q">连接后无法上网怎么办？<span class="arrow">+</span></div>
+        <div class="faq-a"><p>请先断开飞云连接，检查本地网络是否正常。如果本地网络正常，尝试切换节点后重新连接。仍然无法解决请联系在线客服。</p></div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">连接速度很慢怎么办？<span class="arrow">+</span></div>
+        <div class="faq-a"><p>点击节点列表手动切换到距离更近的节点（如香港、日本）。也可以在设置中开启「自动优选」让飞云自动选择最快的节点。</p></div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">支持同时使用几台设备？<span class="arrow">+</span></div>
+        <div class="faq-a"><p>根据套餐不同：月付支持 3 台设备，半年付支持 4 台，年付支持 5 台设备同时在线。</p></div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">试用期过了怎么续费？<span class="arrow">+</span></div>
+        <div class="faq-a"><p>打开飞云 App，进入「设置 → 购买套餐」选择适合的套餐，支持支付宝和微信支付。购买后复制激活码，输入即可激活。</p></div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">飞云会记录我的上网数据吗？<span class="arrow">+</span></div>
+        <div class="faq-a"><p>不会。飞云承诺不记录、不存储任何用户的浏览和使用记录。所有传输数据均通过加密通道处理。</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="footer-meta">© 2026 飞云 · 让连接更自由</div>
+    <div class="footer-links">
+      <a href="index.html">首页</a>
+      <a href="index.html#pricing">价格</a>
+      <a href="#">隐私政策</a>
+      <a href="#">联系客服</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+(function(){
+  // Auto-number visible steps
+  function renumberSteps(){
+    document.querySelectorAll('.step-list').forEach(function(list){
+      var n = 0;
+      list.querySelectorAll('.step').forEach(function(step){
+        if(step.offsetParent !== null){
+          n++;
+          var num = step.querySelector('.step-num');
+          if(num) num.textContent = n;
+        }
+      });
+    });
+  }
+  renumberSteps();
+
+  // Platform tabs
+  var btns = document.querySelectorAll('.tab-btn');
+  var panels = document.querySelectorAll('.tutorial-panel');
+  function switchTab(name){
+    btns.forEach(function(b){b.classList.remove('active');});
+    panels.forEach(function(p){p.classList.remove('active');});
+    var target = document.querySelector('.tab-btn[data-tab="'+name+'"]');
+    var panel = document.getElementById('panel-'+name);
+    if(target) target.classList.add('active');
+    if(panel) panel.classList.add('active');
+    renumberSteps();
+  }
+  btns.forEach(function(btn){
+    btn.addEventListener('click', function(){ switchTab(btn.dataset.tab); });
+  });
+  // Auto-select tab from URL hash
+  if(window.location.hash){
+    var h = window.location.hash.replace('#','').toLowerCase();
+    if(h === 'faq'){
+      // Scroll to FAQ section
+      var faqEl = document.getElementById('faq');
+      if(faqEl) setTimeout(function(){ faqEl.scrollIntoView({behavior:'smooth'}); }, 100);
+    } else {
+      switchTab(h);
+    }
+  }
+
+  // Install method sub-tabs
+  document.querySelectorAll('.install-tab').forEach(function(tab){
+    tab.addEventListener('click', function(){
+      var parent = tab.closest('.step-list');
+      parent.querySelectorAll('.install-tab').forEach(function(t){t.classList.remove('active');});
+      parent.querySelectorAll('.install-panel').forEach(function(p){p.classList.remove('active');});
+      tab.classList.add('active');
+      parent.querySelector('#install-'+tab.dataset.install).classList.add('active');
+      renumberSteps();
+    });
+  });
+
+  // FAQ accordion
+  document.querySelectorAll('.faq-q').forEach(function(q){
+    q.addEventListener('click', function(){
+      q.parentElement.classList.toggle('open');
+    });
+  });
+})();
+</script>
+</body>
+</html>
