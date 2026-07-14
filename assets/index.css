@@ -350,6 +350,7 @@ footer{padding:48px 0;border-top:1px solid var(--line);}
 footer .wrap{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px;}
 .footer-meta{font-family:var(--mono);font-size:12px;color:var(--text-faint);}
 .footer-links{display:flex;gap:24px;font-size:13px;color:var(--text-dim);}
+.footer-links a:hover{color:var(--text);}
 
 @media(max-width:600px){
   .wrap{padding:0 20px;}
