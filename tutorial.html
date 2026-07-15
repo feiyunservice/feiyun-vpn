@@ -55,7 +55,16 @@
         </h3>
         <p>点击下方按钮下载 APK 文件，打开文件按提示安装。如果系统提示「未知来源」，请在设置中允许安装。</p>
         <div class="btn-row">
-          <a href="#" class="btn-sm">下载 APK →</a>
+          <div class="dl-menu">
+            <button type="button" class="btn-sm dl-trigger">下载 APK
+              <svg class="dl-caret" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"></path></svg>
+            </button>
+            <div class="dl-list">
+              <a href="https://app.feiyun.app/feiyun-v2.1.2-android.apk" class="dl-item">下载地址1</a>
+              <a href="https://app2.feiyun.app/feiyun_v2.1.2-android.apk" class="dl-item">下载地址2</a>
+              <a href="#" class="dl-item">备用下载地址</a>
+            </div>
+          </div>
         </div>
         <div class="note">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><path d="M12 16v-4"></path><path d="M12 8h.01"></path></svg>
@@ -83,18 +92,15 @@
 
   <!-- iOS -->
   <div class="tutorial-panel" id="panel-ios">
-    <div style="max-width:720px;margin:0 auto 24px;padding:14px 18px;background:var(--bg-raised-2);border:1px solid var(--line);border-radius:8px;font-size:13px;color:var(--text-dim);display:flex;align-items:flex-start;gap:10px;">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" style="width:16px;height:16px;color:var(--accent);flex-shrink:0;margin-top:2px;"><circle cx="12" cy="12" r="10"></circle><path d="M12 16v-4"></path><path d="M12 8h.01"></path></svg>
-      <span>由于AppStore限制，飞云IOS端不提供试用和购买功能，您可在网页端购买激活码后复制到客户端激活使用。</span>
-    </div>
+   
     <div class="step-list">
       <div class="install-tabs">
         <button class="install-tab active" data-install="testflight">
           <span class="tab-title"><span class="radio"></span>TestFlight 安装</span>
-          <span class="tab-desc">适用于中国大陆 Apple ID 用户，无需海外账号即可安装。</span>
+          <span class="tab-desc">无需海外账号，客户端需定期更新</span>
         </button>
-        <button class="install-tab" data-install="appstore">
-          <span class="tab-title"><span class="radio"></span>App Store 安装</span>
+        <button class="install-tab disabled" data-install="appstore" disabled>
+          <span class="tab-title"><span class="radio"></span>App Store 安装<span class="tab-badge">暂时不可用</span></span>
           <span class="tab-desc">适用于拥有海外 Apple ID的用户，直接在 App Store 中搜索安装。</span>
         </button>
       </div>
@@ -120,12 +126,9 @@
           </h3>
           <p>点击下方按钮打开飞云的 TestFlight 邀请链接，页面会自动跳转到 TestFlight 应用并开始下载安装。</p>
           <div class="btn-row">
-            <a href="#" class="btn-sm">打开邀请链接 →</a>
+            <a href="https://testflight.apple.com/join/hSTmAPD5" class="btn-sm">打开邀请链接 →</a>
           </div>
-          <div class="note">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><path d="M12 16v-4"></path><path d="M12 8h.01"></path></svg>
-            <span>如果提示「Beta 已满」，说明当前测试名额已满，请使用右侧的 App Store 方式安装。</span>
-          </div>
+         
         </div>
       </div>
 
@@ -179,12 +182,17 @@
         </h3>
         <p>下载 Windows 安装包（.exe），双击运行安装程序，按提示完成安装。支持 Windows 10 及以上版本。</p>
         <div class="btn-row">
-          <a href="#" class="btn-sm">下载 Windows 版 →</a>
+          <div class="dl-menu">
+            <button type="button" class="btn-sm dl-trigger">下载 Windows 版
+              <svg class="dl-caret" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"></path></svg>
+            </button>
+            <div class="dl-list">
+              <a href="https://app.feiyun.app/feiyun-v2.1.2-windows.exe" class="dl-item">下载地址1</a>
+              <a href="https://app2.feiyun.app/feiyun-v2.1.2-windows.exe" class="dl-item">下载地址2</a>
+            </div>
+          </div>
         </div>
-        <div class="note">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><path d="M12 16v-4"></path><path d="M12 8h.01"></path></svg>
-          <span>如果 Windows Defender 弹出 SmartScreen 警告，点击「更多信息 → 仍要运行」即可。</span>
-        </div>
+       
       </div>
       <div class="step">
         <div class="step-num"></div>
@@ -216,7 +224,15 @@
         </h3>
         <p>下载 macOS 安装包（.dmg），双击打开后将飞云图标拖入「应用程序」文件夹。</p>
         <div class="btn-row">
-          <a href="#" class="btn-sm">下载 macOS 版 →</a>
+          <div class="dl-menu">
+            <button type="button" class="btn-sm dl-trigger">下载 macOS 版
+              <svg class="dl-caret" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"></path></svg>
+            </button>
+            <div class="dl-list">
+              <a href="https://app.feiyun.app/feiyun-v2.1.2-macos.dmg" class="dl-item">下载地址1</a>
+              <a href="https://app2.feiyun.app/feiyun_v2.1.2-macos.dmg" class="dl-item">下载地址2</a>
+            </div>
+          </div>
         </div>
       </div>
       <div class="step">
@@ -251,11 +267,18 @@
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v13"></path><path d="M7 11l5 5 5-5"></path><path d="M5 21h14"></path></svg>
           下载安装
         </h3>
-        <p>支持 Debian/Ubuntu 系统的 .deb 包和通用 AppImage 格式。推荐使用 deb 包安装：</p>
-        <div class="code">sudo dpkg -i feiyun_*.deb</div>
+        <p>支持 Debian/Ubuntu 系统的 .deb 包安装：</p>
+        <div class="code">sudo dpkg -i feiyun*.deb</div>
         <div class="btn-row">
-          <a href="#" class="btn-sm">下载 deb 包 →</a>
-          <a href="#" class="btn-sm btn-outline">下载 AppImage →</a>
+          <div class="dl-menu">
+            <button type="button" class="btn-sm dl-trigger">下载 deb 包
+              <svg class="dl-caret" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"></path></svg>
+            </button>
+            <div class="dl-list">
+              <a href="https://app.feiyun.app/feiyun-v2.1.2-linux.deb" class="dl-item">下载地址1</a>
+              <a href="https://app2.feiyun.app/feiyun_v2.1.2-linux.deb" class="dl-item">下载地址2</a>
+            </div>
+          </div>
         </div>
       </div>
       <div class="step">
@@ -264,12 +287,7 @@
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"></rect><path d="M3 9h18"></path></svg>
           启动应用
         </h3>
-        <p>安装完成后在应用菜单中搜索「飞云」启动，或在终端运行：</p>
-        <div class="code">feiyun</div>
-        <div class="note">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><path d="M12 16v-4"></path><path d="M12 8h.01"></path></svg>
-          <span>AppImage 用户需先赋予执行权限：<code>chmod +x feiyun.AppImage</code></span>
-        </div>
+        <p>安装完成后在应用菜单中搜索「飞云」启动</p>
       </div>
       <div class="step">
         <div class="step-num"></div>
@@ -300,7 +318,7 @@
       </div>
       <div class="faq-item">
         <div class="faq-q">试用期过了怎么续费？<span class="arrow">+</span></div>
-        <div class="faq-a"><p>打开飞云 App，进入「设置 → 购买套餐」选择适合的套餐，支持支付宝和微信支付。购买后复制激活码，输入即可激活。</p></div>
+        <div class="faq-a"><p>打开飞云 App，进入「设置 → 购买激活码」选择适合的套餐，支持支付宝和微信支付。购买后复制激活码，输入即可激活。</p></div>
       </div>
       <div class="faq-item">
         <div class="faq-q">飞云会记录上网数据吗？<span class="arrow">+</span></div>

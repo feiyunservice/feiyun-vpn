@@ -159,6 +159,27 @@ nav .wrap{display:flex;align-items:center;justify-content:space-between;height:6
 }
 .step .btn-outline:hover{border-color:var(--text-faint);background:var(--bg-raised-2);}
 
+/* Download address dropdown */
+.dl-menu{position:relative;display:inline-block;}
+.dl-trigger{border:none;cursor:pointer;}
+.dl-caret{width:14px;height:14px;transition:transform .2s ease;}
+.dl-menu.open .dl-caret{transform:rotate(180deg);}
+.dl-list{
+  position:absolute;top:calc(100% + 8px);left:0;z-index:30;
+  min-width:200px;
+  background:var(--bg-raised);border:1px solid var(--line);
+  border-radius:10px;padding:6px;
+  box-shadow:var(--shadow);
+  display:none;flex-direction:column;gap:2px;
+}
+.dl-menu.open .dl-list{display:flex;}
+.dl-item{
+  font-family:var(--mono);font-size:13px;color:var(--text-dim);
+  padding:10px 14px;border-radius:6px;
+  transition:background .15s ease,color .15s ease;
+}
+.dl-item:hover{background:var(--bg-raised-2);color:var(--accent);}
+
 /* Install method sub-tabs */
 .install-tabs{
   display:grid;grid-template-columns:1fr 1fr;gap:12px;
@@ -193,6 +214,16 @@ nav .wrap{display:flex;align-items:center;justify-content:space-between;height:6
 .install-tab .tab-desc{
   font-size:12px;color:var(--text-dim);line-height:1.5;
   padding-left:0;
+}
+.install-tab:disabled,.install-tab.disabled{
+  opacity:0.55;cursor:not-allowed;
+  background:var(--bg-raised);
+}
+.install-tab:disabled:hover,.install-tab.disabled:hover{border-color:var(--line);}
+.tab-badge{
+  margin-left:8px;font-family:var(--sans);font-size:11px;font-weight:500;
+  color:var(--text-faint);background:var(--bg-raised-2);
+  border:1px solid var(--line);border-radius:4px;padding:1px 6px;
 }
 .install-panel{display:none;}
 .install-panel.active{display:block;}

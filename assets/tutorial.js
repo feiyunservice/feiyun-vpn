@@ -59,4 +59,20 @@
       q.parentElement.classList.toggle('open');
     });
   });
+
+  // Download address dropdowns
+  var dlMenus = document.querySelectorAll('.dl-menu');
+  dlMenus.forEach(function(menu){
+    var trigger = menu.querySelector('.dl-trigger');
+    if(!trigger) return;
+    trigger.addEventListener('click', function(e){
+      e.stopPropagation();
+      var isOpen = menu.classList.contains('open');
+      dlMenus.forEach(function(m){ m.classList.remove('open'); });
+      if(!isOpen) menu.classList.add('open');
+    });
+  });
+  document.addEventListener('click', function(){
+    dlMenus.forEach(function(m){ m.classList.remove('open'); });
+  });
 })();
