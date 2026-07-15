@@ -124,7 +124,7 @@
       html += '<li>' + pkg.traffic_gb + 'G 流量</li>';
       var devs = pkg.max_devices || (pkg.duration_days <= 31 ? 3 : pkg.duration_days <= 186 ? 4 : 5);
       html += '<li>支持 ' + devs + ' 台设备</li>';
-      html += '<li>全部 20+ 节点</li>';
+      html += '<li>节点不限速</li>';
       html += '<li>在线客服支持</li>';
       if(pkg.duration_days > 186) html += '<li>专属节点优先体验</li>';
       html += '</ul>';
