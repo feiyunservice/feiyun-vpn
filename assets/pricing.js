@@ -116,7 +116,7 @@
       var featured = isFeatured(i, pkgs.length);
       var label = durationLabel(pkg.duration_days);
       html += '<div class="price-card' + (featured ? ' featured' : '') + '">';
-      if(featured) html += '<div class="price-badge">最划算</div>';
+      if(featured) html += '<div class="price-badge">热门</div>';
       html += '<div class="price-tier">' + pkg.name + '</div>';
       html += '<div class="price-amount">' + formatPrice(pkg) + '<span>/ ' + label + '</span></div>';
       html += '<div class="price-desc">' + (pkg.description || '') + '</div>';
