@@ -286,6 +286,7 @@ footer .wrap{display:flex;justify-content:space-between;align-items:center;flex-
 @media(max-width:600px){
   .wrap{padding:0 20px;}
   .step{padding:24px 20px;}
+  .step-num{left:15px;}
   .tabs{gap:2px;padding:4px;}
   .tab-btn{padding:8px 14px;font-size:12px;}
   footer .wrap{flex-direction:column;justify-content:center;align-items:center;text-align:center;gap:12px;}
