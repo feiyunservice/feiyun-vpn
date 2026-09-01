@@ -13,8 +13,8 @@
 
 ### Android
 
-- [海外下载地址 1](https://app.feiyun.app/feiyun-v2.1.7-android.apk)
-- [海外下载地址 2](https://dl.apple.feiyun.app/feiyun-v2.1.7-android.apk)
+- [海外下载地址 1](https://app.feiyun.app/feiyun-v2.1.8-android.apk)
+- [海外下载地址 2](https://dl.apple.feiyun.app/feiyun-v2.1.8-android.apk)
 
 ### iOS
 
@@ -25,18 +25,18 @@
 
 ### Windows
 
-- [海外下载地址 1](https://app.feiyun.app/feiyun-v2.1.7-windows.exe)
-- [海外下载地址 2](https://dl.apple.feiyun.app/feiyun-v2.1.7-windows.exe)
+- [海外下载地址 1](https://app.feiyun.app/feiyun-v2.1.8-windows.exe)
+- [海外下载地址 2](https://dl.apple.feiyun.app/feiyun-v2.1.8-windows.exe)
 
 ### macOS
 
-- [海外下载地址 1](https://app.feiyun.app/feiyun-v2.1.7-macos.dmg)
-- [海外下载地址 2](https://dl.apple.feiyun.app/feiyun-v2.1.7-macos.dmg)
+- [海外下载地址 1](https://app.feiyun.app/feiyun-v2.1.8-macos.dmg)
+- [海外下载地址 2](https://dl.apple.feiyun.app/feiyun-v2.1.8-macos.dmg)
 
 ### Linux
 
-- [海外下载地址 1](https://app.feiyun.app/feiyun-v2.1.7-linux.deb)
-- [海外下载地址 2](https://dl.apple.feiyun.app/feiyun-v2.1.7-linux.deb)
+- [海外下载地址 1](https://app.feiyun.app/feiyun-v2.1.8-linux.deb)
+- [海外下载地址 2](https://dl.apple.feiyun.app/feiyun-v2.1.8-linux.deb)
 
 ## 使用方法
 
